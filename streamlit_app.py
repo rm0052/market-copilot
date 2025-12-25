@@ -3,7 +3,6 @@ import streamlit as st
 import json
 from groq import Groq
 import uuid
-from streamlit_js_eval import streamlit_js_eval
 from datetime import datetime, timedelta, timezone
 import os
 
