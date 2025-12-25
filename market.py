@@ -4,9 +4,7 @@ import json
 from groq import Groq
 import uuid
 from streamlit_js_eval import streamlit_js_eval
-from supabase import create_client, Client
 from datetime import datetime, timedelta, timezone
-import praw
 import os
 
 groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
