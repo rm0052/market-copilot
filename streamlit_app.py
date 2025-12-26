@@ -16,11 +16,11 @@ Given a user query, classify it into ONE of the following tools:
 - market_news_chatbot
 
 Return ONLY valid JSON with:
-{
+{{
   "tool": "...",
   "symbols": [...],
   "reason": "short explanation"
-}
+}}
 
 User query:
 {query}
