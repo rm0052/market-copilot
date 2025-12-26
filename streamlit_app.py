@@ -49,19 +49,19 @@ def groq_generate(prompt):
   
 def route_query(query):
     response = groq_generate(ROUTER_PROMPT.format(query=query))
-    return json.loads(response.text)
+    match = re.search(r"\{.*\}", response, re.DOTALL)
+    if not match:
+        raise ValueError(f"Invalid router output:\n{response}")
+    return json.loads(match.group(0))
 
 def reddit_news_chatbot(query):
     url = "https://rm96-reddit-market-agent.hf.space/query"
-    
     payload = {
         "question": query,
         "lookback_hours": 24
     }
-    
-    r = requests.post(url, json=payload)
-    
-    return r
+    r = requests.post(url, json=payload, timeout=20)
+    return r.json()
 
 
 question = st.chat_input("Type your question and press Enter...")
