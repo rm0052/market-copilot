@@ -49,10 +49,20 @@ def groq_generate(prompt):
   
 def route_query(query):
     response = groq_generate(ROUTER_PROMPT.format(query=query))
+
+    # Debug print (optional but useful)
+    print("ROUTER RAW OUTPUT:\n", response)
+
     match = re.search(r"\{.*\}", response, re.DOTALL)
     if not match:
-        raise ValueError(f"Invalid router output:\n{response}")
-    return json.loads(match.group(0))
+        raise ValueError(f"Router did not return JSON:\n{response}")
+
+    route = json.loads(match.group(0))
+
+    if "tool" not in route:
+        raise ValueError(f"Missing 'tool' in router output:\n{route}")
+
+    return route
 
 def reddit_news_chatbot(query):
     url = "https://rm96-reddit-market-agent.hf.space/query"
